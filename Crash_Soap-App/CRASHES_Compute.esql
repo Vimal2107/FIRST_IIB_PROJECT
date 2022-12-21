@@ -1,0 +1,39 @@
+
+
+CREATE COMPUTE MODULE CRASHES_Compute
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		-- CALL CopyMessageHeaders();
+		CALL CopyEntireMessage();
+		RETURN TRUE;
+	END;
+
+
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+	
+         DECLARE days INTEGER;
+		DECLARE days_num CHARACTER;
+		DECLARE inpref REFERENCE TO InputRoot.SOAP.Body.ns:crash_input.Number_of_Crashes;
+		
+		SET days_num = inpref;
+		
+		
+		DECLARE query CHARACTER 'SELECT *FROM CSVTABLE WHERE NUMBEROFCRASHES=?';
+		
+		SET OutputRoot.SOAP.Body.ns:crash_Output.out= PASSTHRU(query.VIMALDB VALUES(days_num));
+		
+		
+		SET days=CARDINALITY(OutputRoot.SOAP.Body.ns:crash_Output.out[]);
+		IF days = 0 THEN
+			
+			
+			SET OutputRoot.SOAP.Body.ns:crash_Output.out='No Data Found with the given details';
+		ELSE
+			
+			SET OutputRoot.SOAP.Body.ns:crash_Output.out='Successfully data Found';
+		END IF;
+      
+	
+	END;
+END MODULE;

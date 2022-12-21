@@ -1,0 +1,53 @@
+
+
+CREATE COMPUTE MODULE Excepflow_Compute
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		-- CALL CopyMessageHeaders();
+		CALL CopyEntireMessage();
+		RETURN TRUE;
+	END;
+
+		
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+	
+        
+		DECLARE APPNAME CHARACTER;
+		DECLARE ExcepNUM INTEGER;
+		DECLARE ExcepTXT CHARACTER;
+		DECLARE ExcepBIP CHARACTER;
+		DECLARE HOSTREQNAME CHARACTER;
+		DECLARE HOSTREQID INTEGER;
+				
+		DECLARE INPUTVALUE REFERENCE TO InputRoot.SOAP.Body.CSVSCHEMA.record; 
+		
+		DECLARE EXCEP REFERENCE TO InputExceptionList.*[1];
+		 
+		    WHILE EXCEP.Number is NOT NULL DO
+		  SET OutputRoot.JSON.Data.APPNAME=ApplicationLabel;
+		  SET OutputRoot.JSON.Data.ExcepNUM=EXCEP.Number;
+		  SET OutputRoot.JSON.Data.ExcepTXT=EXCEP.Text;
+		  SET OutputRoot.JSON.Data.ExcepBIP=ExcepBIP.Catalog;
+		  --SET OutputRoot.JSON.Data.HOSTREQNAME=INPUTVALUE.;
+		  
+		  
+		  	  
+		  SET APPNAME =ApplicationLabel;
+		  SET ExcepNUM =EXCEP.Number;
+		  SET ExcepTXT =EXCEP.Text;
+		  SET ExcepBIP =EXCEP.Catalog;
+
+		
+		  MOVE EXCEP LASTCHILD;
+		  END WHILE;
+           	    
+          CALL pro5(APPNAME,ExcepNUM,ExcepTXT,ExcepBIP);
+                
+
+	END;
+	
+        CREATE PROCEDURE pro5 (IN APPNAME CHARACTER,IN ExcepNUM INTEGER,IN ExcepTXT CHARACTER,IN ExcepBIP INTEGER)
+        LANGUAGE DATABASE
+        EXTERNAL NAME "PROCEDURE7";	
+END MODULE;

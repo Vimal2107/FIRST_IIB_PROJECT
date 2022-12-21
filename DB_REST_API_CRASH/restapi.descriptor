@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:restapiDescriptor xmlns="http://com.ibm.etools.mft.descriptor.base" xmlns:ns2="http://com.ibm.etools.mft.descriptor.restapi" definitionType="swagger_20" definitionFile="swagger.json" implementation="gen/DB_REST_API_CRASH.msgflow" https="false" definitionWithExtRef="false" faultFormat="JSON">
+    <references>
+        <sharedLibraryReference>
+            <libraryName>DBLOG</libraryName>
+        </sharedLibraryReference>
+    </references>
+    <ns2:operations>
+        <ns2:operation name="getCRASHES" implementation="getCRASHES.subflow"/>
+        <ns2:operation name="getDAYS" implementation="getDAYS.subflow"/>
+    </ns2:operations>
+    <ns2:errorHandlers>
+        <ns2:errorHandler type="CATCH" implementation="DB_REST_API_CRASHInputCatchHandler.subflow"/>
+        <ns2:errorHandler type="FAILURE" implementation="DB_REST_API_CRASHInputFailureHandler.subflow"/>
+    </ns2:errorHandlers>
+</ns2:restapiDescriptor>

@@ -1,0 +1,41 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "title" : "DB_REST_API_CRASH",
+    "version" : "1.0.0",
+    "description" : "DB_REST_API_CRASH"
+  },
+  "paths" : {
+    "/DAYS" : {
+      "get" : {
+        "operationId" : "getDAYS",
+        "responses" : {
+          "200" : {
+            "description" : "The operation was successful.",
+            "schema" : {
+              "type" : "string"
+            }
+          }
+        },
+        "produces" : [ "application/json" ],
+        "description" : "Retrieve DAYS"
+      }
+    },
+    "/CRASHES" : {
+      "get" : {
+        "operationId" : "getCRASHES",
+        "responses" : {
+          "200" : {
+            "description" : "The operation was successful.",
+            "schema" : {
+              "type" : "string"
+            }
+          }
+        },
+        "produces" : [ "application/json" ],
+        "description" : "Retrieve CRASHES"
+      }
+    }
+  },
+  "basePath" : "/db_rest_api_crash/v1"
+}
